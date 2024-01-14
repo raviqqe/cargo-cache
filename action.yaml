@@ -1,4 +1,4 @@
-name: Rust Cargo cache
+name: cargo-cache
 description: Saves Rust build cache for target and ~/.cargo directories
 branding:
   icon: coffee
