@@ -1,5 +1,5 @@
-name: Rust saves cache
-description: Saves Rust build artifacts
+name: Rust Cargo cache
+description: Saves Rust build cache for target and ~/.cargo directories
 branding:
   icon: coffee
   color: orange
