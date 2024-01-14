@@ -11,6 +11,10 @@ runs:
         key: ${{ runner.os }}
     - uses: actions/cache@v3
       with:
+        path: target
+        key: ${{ runner.os }}
+    - uses: actions/cache@v3
+      with:
         path: ~/.cargo
         key: ${{ runner.os }}-primes
     - uses: ruby/setup-ruby@v1
