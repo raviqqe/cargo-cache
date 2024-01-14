@@ -4,9 +4,20 @@ inputs: {}
 outputs: {}
 runs:
   using: composite
+  env:
+    DIRECTORY: /tmp/cargo-cache
   steps:
-    - run: echo cargo_config=$(cat ~/.cargo/config.toml) >> ${{ github.env }}
-    - run: echo cargo_install_list=$(cargo install --list) >> ${{ github.env }}
+    - run: $
+    - run: |
+        file=/tmp/cargo-cache/cargo_config.toml
+
+        cargo install --list > $file
+        echo cargo_install_list_file=$file >> ${{ github.env }}
+    - run: |
+        file=/tmp/cargo_install_list.txt
+
+        cargo install --list > $file
+        echo cargo_install_list_file=$file >> ${{ github.env }}
     - uses: actions/cache@v3
       with:
         path: ~/.cargo/registry
