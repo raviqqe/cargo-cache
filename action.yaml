@@ -16,10 +16,8 @@ runs:
       run: mkdir -p $directory
     - shell: bash
       run: |
-        file=~/.cargo/config.toml
-
-        touch $file
-        cp $file $directory
+        touch ~/.cargo/config.toml
+        cp $_ $directory
     - shell: bash
       run: cp $(find . -name Cargo.lock) $directory
     # TODO Move this to post steps and remove timestamps from keys.
