@@ -13,7 +13,7 @@ runs:
   using: composite
   steps:
     - shell: bash
-      run: echo CARGO_CACHE_DIRECTORY=/tmp/cargo_cache >> ${{ github.env }}
+      run: echo CARGO_CACHE_DIRECTORY=.cargo_cache >> ${{ github.env }}
     - shell: bash
       run: mkdir -p $CARGO_CACHE_DIRECTORY
     - shell: bash
