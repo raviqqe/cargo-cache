@@ -32,7 +32,7 @@ runs:
         >> ${{github.env}}
     - uses: actions/cache@v3
       with:
-        path: ~/.cargo/registry
+        path: ~/.cargo
         key: ${{ env.CARGO_CACHE_KEY }}
     - uses: actions/cache@v3
       with:
