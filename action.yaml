@@ -35,8 +35,8 @@ runs:
     - uses: actions/cache@v3
       with:
         path: ~/.cargo
-        key: cargo-cache-cargo-${{ env.CARGO_CACHE_KEY }}
+        key: cargo-cache-${{ github.job_id }}-${{ github.action }}-${{ env.CARGO_CACHE_KEY }}
     - uses: actions/cache@v3
       with:
         path: ${{ inputs.path }}/target/*/deps
-        key: cargo-cache-target-${{ env.CARGO_CACHE_KEY }}
+        key: cargo-cache-${{ github.job_id }}-${{ github.action }}-${{ env.CARGO_CACHE_KEY }}
