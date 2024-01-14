@@ -10,8 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: raviqqe/cargo-cache@chore/readme
-        with:
-          path: test
       - run: cargo install wasmtime-cli
       - run: cargo build
         working-directory: test
