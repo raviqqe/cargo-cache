@@ -32,5 +32,5 @@ runs:
       with:
         path: |
           ~/.cargo
-          ${{ inputs.path }}/target/*/deps
+          ${{ inputs.path }}/target
         key: cargo-cache-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.CARGO_CACHE_DIRECTORY, '/*')) }}
