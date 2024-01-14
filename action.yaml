@@ -33,7 +33,11 @@ runs:
           ~/.cargo/bin
           ~/.cargo/git
           ~/.cargo/registry
-          **/target
+          **/target/*/.fingerprint
+          **/target/*/build
+          **/target/*/deps
+          **/target/*/*.d
+          **/target/*/*.rlib
         key: ${{ env.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/*')) }}-${{ env.timestamp }}
         restore-keys: |
           ${{ env.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/*')) }}-
