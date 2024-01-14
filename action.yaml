@@ -1,5 +1,5 @@
 name: Rust Cargo cache
-description: Saves Rust build cache for target and ~/.cargo directories
+description: Saves and restores Rust build cache in target and ~/.cargo directories
 branding:
   icon: coffee
   color: orange
@@ -13,28 +13,31 @@ runs:
   using: composite
   steps:
     - shell: bash
-      run: echo CARGO_CACHE_DIRECTORY=.cargo_cache >> ${{ github.env }}
+      run: echo directory=.cargo_cache >> ${{ github.env }}
     - shell: bash
-      run: mkdir -p $CARGO_CACHE_DIRECTORY
+      run: mkdir -p $directory
     - shell: bash
       run: |
         file=~/.cargo/config.toml
 
         touch $file
-        cp $file $CARGO_CACHE_DIRECTORY
-    # TODO Move this to post steps.
+        cp $file $directory
+    - shell: bash
+      run: cp ${{ inputs.path }}/Cargo.lock $directory
+    # TODO Move this to post steps and remove timestamps from keys.
     # https://github.com/actions/runner/issues/1478
     - shell: bash
-      run: cargo install --list > $CARGO_CACHE_DIRECTORY/install.txt
+      run: cargo install --list > $directory/install.txt
     - shell: bash
-      run: cp ${{ inputs.path }}/Cargo.lock $CARGO_CACHE_DIRECTORY
+      run: echo timestamp=$(date +%s) >> ${{ github.env }}
     - uses: actions/cache@v3
       with:
         path: |
           ~/.cargo
           ${{ inputs.path }}/target
-        key: cargo-cache-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.CARGO_CACHE_DIRECTORY, '/*')) }}
+        key: cargo-cache-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/*')) }}-${{ env.timestamp }}
         restore-keys: |
           cargo-cache-${{ runner.os }}-
           cargo-cache-${{ runner.os }}-${{ github.job }}-
           cargo-cache-${{ runner.os }}-${{ github.job }}-${{ github.action }}-
+          cargo-cache-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/*')) }}-
