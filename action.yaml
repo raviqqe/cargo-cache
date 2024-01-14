@@ -1,12 +1,19 @@
 name: Rust saves cache
 description: Saves Rust build artifacts
-inputs: {}
+branding:
+  icon: coffee
+  color: orange
+inputs:
+  path:
+    description: Cargo manifest directory
+    required: false
+    default: .
 outputs: {}
 runs:
   using: composite
   steps:
     - shell: bash
-      run: echo CARGO_CACHE_DIRECTORY=/tmp/cargo_cache >> ${{ github.env }}
+      run: echo CARGO_CACHE_DIRECTORY=.cargo_cache >> ${{ github.env }}
     - shell: bash
       run: mkdir -p $CARGO_CACHE_DIRECTORY
     - shell: bash
@@ -18,14 +25,16 @@ runs:
     - shell: bash
       run: cargo install --list > $CARGO_CACHE_DIRECTORY/install.txt
     - shell: bash
+      run: cp ${{ inputs.path }}/Cargo.lock $CARGO_CACHE_DIRECTORY
+    - shell: bash
       run: >
-        echo CARGO_CACHE_KEY=${{ runner.os }}-${{ hashFiles(format("{0}/{1}", env.CARGO_CACHE_DIRECTORY, "*"), "/") }}
+        echo CARGO_CACHE_KEY=${{ runner.os }}-${{ hashFiles(join(env.CARGO_CACHE_DIRECTORY, '/*')) }}
         >> ${{github.env}}
     - uses: actions/cache@v3
       with:
-        path: ~/.cargo/registry
-        key: ${{ env.CARGO_CACHE_KEY }}
+        path: ~/.cargo
+        key: cargo-cache-cargo-${{ env.CARGO_CACHE_KEY }}
     - uses: actions/cache@v3
       with:
-        path: target/*/deps
-        key: ${{ env.CARGO_CACHE_KEY }}
+        path: ${{ inputs.path }}/target/*/deps
+        key: cargo-cache-target-${{ env.CARGO_CACHE_KEY }}
