@@ -7,7 +7,7 @@ runs:
   steps:
     - uses: actions/cache@v3
       with:
-        path: ~/.cargo
+        path: ~/.cargo/registry
         key: ${{ runner.os }}
     - uses: actions/cache@v3
       with:
