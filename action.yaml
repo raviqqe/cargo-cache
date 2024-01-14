@@ -22,6 +22,8 @@ runs:
 
         touch $file
         cp $file $CARGO_CACHE_DIRECTORY
+    # TODO Move this to post steps.
+    # https://github.com/actions/runner/issues/1478
     - shell: bash
       run: cargo install --list > $CARGO_CACHE_DIRECTORY/install.txt
     - shell: bash
