@@ -30,7 +30,7 @@ runs:
       run: cp ${{ inputs.path }}/Cargo.lock $CARGO_CACHE_DIRECTORY
     - uses: actions/cache@v3
       with:
-        path:
-          - ~/.cargo
-          - ${{ inputs.path }}/target/*/deps
+        path: |
+          ~/.cargo
+          ${{ inputs.path }}/target/*/deps
         key: cargo-cache-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.CARGO_CACHE_DIRECTORY, '/*')) }}
