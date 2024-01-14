@@ -11,7 +11,7 @@ jobs:
       - uses: raviqqe/cargo-cache@chore/test
       - run: cargo install wasmtime-cli
       - run: cargo build
-        working_directory: test
+        working-directory: test
   spell_check:
     runs-on: ubuntu-latest
     steps:
