@@ -9,10 +9,12 @@ runs:
   steps:
     - run: mkdir -p $DIRECTORY
     - run: |
+        config_file=~/.cargo/config.toml
         file=$DIRECTORY/config.toml
 
-        cargo install --list > $file
-        echo cargo_install_list_file=$file >> ${{ github.env }}
+        if [ -r $config_file ]; then
+          cp $config_file $file
+        fi
     - run: |
         file=$DIRECTORY/install.txt
 
