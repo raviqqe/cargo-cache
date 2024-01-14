@@ -1,6 +1,13 @@
 name: Rust saves cache
 description: Saves Rust build artifacts
-inputs: {}
+branding:
+  icon: coffee
+  color: orange
+inputs:
+  paths:
+    description: Paths to Markdown files
+    required: false
+    default: "**/*.md"
 outputs: {}
 runs:
   using: composite
