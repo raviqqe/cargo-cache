@@ -1,0 +1,25 @@
+name: Rust saves cache
+description: Saves Rust build artifacts
+inputs: {}
+outputs: {}
+runs:
+  using: composite
+  env:
+    DIRECTORY: /tmp/cargo_cache
+  steps:
+    - run: mkdir -p $DIRECTORY
+    - run: |
+        file=~/.cargo/config.toml
+
+        touch $file
+        cp $file $DIRECTORY
+    - run: |
+        cargo install --list > $DIRECTORY/install.txt
+    - uses: actions/cache@v3
+      with:
+        path: ~/.cargo/registry
+        key: ${{ runner.os }}-${{ hashFiles([env.DIRECTORY, "*"], "/") }}
+    - uses: actions/cache@v3
+      with:
+        path: target/*/deps
+        key: ${{ runner.os }}-${{ hashFiles([env.DIRECTORY, "*"], "/") }}
