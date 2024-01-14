@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: raviqqe/cargo-cache@chore/test
+        with:
+          path: test
       - run: cargo install wasmtime-cli
       - run: cargo build
         working-directory: test
