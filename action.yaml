@@ -25,6 +25,8 @@ runs:
     - shell: bash
       run: cargo install --list > $CARGO_CACHE_DIRECTORY/install.txt
     - shell: bash
+      run: cp ${{ inputs.path }}/Cargo.lock $CARGO_CACHE_DIRECTORY
+    - shell: bash
       run: >
         echo CARGO_CACHE_KEY=${{ runner.os }}-${{ hashFiles(join(env.CARGO_CACHE_DIRECTORY, '/*')) }}
         >> ${{github.env}}
