@@ -5,6 +5,10 @@
 
 GitHub Action to cache Rust build artifacts.
 
+## References
+
+- [`actions/cache`](https://github.com/actions/cache/blob/main/examples.md)
+
 ## License
 
 [The Unlicense](UNLICENSE)
