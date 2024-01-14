@@ -8,7 +8,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: raviqqe/cargo-cache@chore/test
+      - uses: raviqqe/cargo-cache@${{ github.sha }}
       - run: cargo install wasmtime-cli
   spell_check:
     runs-on: ubuntu-latest
