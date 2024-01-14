@@ -7,6 +7,7 @@ GitHub Action to cache Rust build artifacts.
 
 ## References
 
+- [`Swatinem/rust-cache`](https://github.com/Swatinem/rust-cache) is a good alternative if saving a big cache is not acceptable for your projects.
 - [`actions/cache`](https://github.com/actions/cache/blob/main/examples.md)
 
 ## License
