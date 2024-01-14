@@ -3,7 +3,7 @@
 [![GitHub Action](https://img.shields.io/github/actions/workflow/status/raviqqe/cargo-cache/test.yaml?branch=main&style=flat-square)](https://github.com/raviqqe/cargo-cache/actions)
 [![License](https://img.shields.io/github/license/raviqqe/cargo-cache.svg?style=flat-square)](UNLICENSE)
 
-> [!Caution]
+> [!Warning]
 > Currently, this action works only with Rust on a nightly channel!
 > Although you can use this action with a stable channel, it might lead to unbounded cache sizes.
 
