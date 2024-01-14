@@ -12,7 +12,7 @@ jobs:
         with:
           path: test
       - run: ls /tmp/cargo_cache
-      - run: echo hashFiles('/tmp/cargo_cache/*')
+      - run: echo ${{ hashFiles('/tmp/cargo_cache/*') }}
       - run: cat /tmp/cargo_cache/*
       - run: cargo install wasmtime-cli
       - run: cargo build
