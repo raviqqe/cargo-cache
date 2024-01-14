@@ -22,19 +22,22 @@ runs:
 
         touch $file
         cp $file $CARGO_CACHE_DIRECTORY
-    # TODO Move this to post steps.
+    - shell: bash
+      run: cp ${{ inputs.path }}/Cargo.lock $CARGO_CACHE_DIRECTORY
+    # TODO Move this to post steps and remove timestamps from keys.
     # https://github.com/actions/runner/issues/1478
     - shell: bash
       run: cargo install --list > $CARGO_CACHE_DIRECTORY/install.txt
     - shell: bash
-      run: cp ${{ inputs.path }}/Cargo.lock $CARGO_CACHE_DIRECTORY
+      run: echo timestamp=$(date +%s) >> ${{ github.env }}
     - uses: actions/cache@v3
       with:
         path: |
           ~/.cargo
           ${{ inputs.path }}/target
-        key: cargo-cache-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.CARGO_CACHE_DIRECTORY, '/*')) }}
+        key: cargo-cache-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.CARGO_CACHE_DIRECTORY, '/*')) }}-${{ env.timestamp }}
         restore-keys: |
           cargo-cache-${{ runner.os }}-
           cargo-cache-${{ runner.os }}-${{ github.job }}-
           cargo-cache-${{ runner.os }}-${{ github.job }}-${{ github.action }}-
+          cargo-cache-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.CARGO_CACHE_DIRECTORY, '/*')) }}-
