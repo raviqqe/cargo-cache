@@ -22,3 +22,8 @@ jobs:
       - uses: streetsidesoftware/cspell-action@v5
         with:
           files: "**/*.md"
+  readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: raviqqe/markdown-link-check@v1
