@@ -4,10 +4,10 @@ branding:
   icon: coffee
   color: orange
 inputs:
-  paths:
-    description: Paths to Markdown files
+  path:
+    description: Cargo manifest directory
     required: false
-    default: "**/*.md"
+    default: .
 outputs: {}
 runs:
   using: composite
@@ -34,5 +34,5 @@ runs:
         key: ${{ env.CARGO_CACHE_KEY }}
     - uses: actions/cache@v3
       with:
-        path: target/*/deps
+        path: ${{ inputs.path }}/target/*/deps
         key: ${{ env.CARGO_CACHE_KEY }}
