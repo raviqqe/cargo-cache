@@ -9,23 +9,21 @@ runs:
   using: composite
   steps:
     - shell: bash
-      run: rustup default nightly
-    - shell: bash
-      run: echo CARGO_UNSTABLE_GC=true >> ${{ github.env }}
-    - shell: bash
-      run: echo prefix=cargo-cache-v1 >> ${{ github.env }}
-    - shell: bash
-      run: echo directory=.cargo_cache >> ${{ github.env }}
-    - shell: bash
-      run: mkdir -p $directory
-    - shell: bash
-      run: cp $(find . -name Cargo.lock) $directory
+      run: |
+        rustup default nightly
+        echo CARGO_UNSTABLE_GC=true >> ${{ github.env }}
+
+        echo prefix=cargo-cache-v1 >> ${{ github.env }}
+        echo directory=.cargo_cache >> ${{ github.env }}
+
+        mkdir -p $directory
+        cp $(find . -name Cargo.lock) $directory
     # TODO Move this to post steps and remove timestamps from keys.
     # https://github.com/actions/runner/issues/1478
     - shell: bash
-      run: cargo install --list > $directory/install.txt
-    - shell: bash
-      run: echo timestamp=$(date +%s) >> ${{ github.env }}
+      run: |
+        cargo install --list > $directory/install.txt
+        echo timestamp=$(date +%s) >> ${{ github.env }}
     - uses: actions/cache@v3
       with:
         path: |
