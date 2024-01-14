@@ -7,6 +7,8 @@ GitHub Action to save and restore Rust build cache in `target` and `~/.cargo` di
 
 ## Current limitations
 
+- The action **always** saves build cache.
+  - For more information see #4.
 - It doesn't support custom `.cargo/config.toml` files.
 
 ## References
