@@ -19,7 +19,7 @@ runs:
       run: cargo install --list > $CARGO_CACHE_DIRECTORY/install.txt
     - shell: bash
       run: >
-        echo CARGO_CACHE_KEY=${{ runner.os }}-${{ hashFiles(format("{0}/{1}", env.CARGO_CACHE_DIRECTORY, "*"), "/") }}
+        echo CARGO_CACHE_KEY=${{ runner.os }}-${{ hashFiles(format('{0}/{1}', env.CARGO_CACHE_DIRECTORY, "*"), "/") }}
         >> ${{github.env}}
     - uses: actions/cache@v3
       with:
