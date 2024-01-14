@@ -5,3 +5,4 @@ edition = "2021"
 private = true
 
 [dependencies]
+tokio = { version = "1.35.1", features = ["full"] }
