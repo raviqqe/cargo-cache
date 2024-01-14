@@ -33,8 +33,8 @@ runs:
     - uses: actions/cache@v3
       with:
         path: ~/.cargo
-        key: ${{ env.CARGO_CACHE_KEY }}
+        key: cargo-cache-cargo-${{ env.CARGO_CACHE_KEY }}
     - uses: actions/cache@v3
       with:
         path: ${{ inputs.path }}/target/*/deps
-        key: ${{ env.CARGO_CACHE_KEY }}
+        key: cargo-cache-target-${{ env.CARGO_CACHE_KEY }}
