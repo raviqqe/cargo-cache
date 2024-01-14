@@ -11,6 +11,7 @@ jobs:
       - uses: raviqqe/cargo-cache@chore/test
         with:
           path: test
+      - run: ls /tmp/cargo_cache
       - run: cargo install wasmtime-cli
       - run: cargo build
         working-directory: test
