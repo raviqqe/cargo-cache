@@ -3,11 +3,7 @@ description: Saves and restores Rust build cache in target and ~/.cargo director
 branding:
   icon: coffee
   color: orange
-inputs:
-  path:
-    description: Cargo manifest directory
-    required: false
-    default: .
+inputs: {}
 outputs: {}
 runs:
   using: composite
@@ -32,9 +28,7 @@ runs:
       run: echo timestamp=$(date +%s) >> ${{ github.env }}
     - uses: actions/cache@v3
       with:
-        path: |
-          ~/.cargo
-          ${{ inputs.path }}/target
+        path: ~/.cargo ${{ env.paths }}
         key: cargo-cache-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/*')) }}-${{ env.timestamp }}
         restore-keys: |
           cargo-cache-${{ runner.os }}-
