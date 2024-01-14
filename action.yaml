@@ -5,7 +5,7 @@ outputs: {}
 runs:
   using: composite
   env:
-    DIRECTORY: /tmp/cargo-cache
+    DIRECTORY: /tmp/cargo_cache
   steps:
     - run: mkdir -p $DIRECTORY
     - run: |
@@ -21,7 +21,7 @@ runs:
     - uses: actions/cache@v3
       with:
         path: ~/.cargo/registry
-        key: ${{ runner.os }}
+        key: ${{ runner.os }}-${{ hashFiles([env.DIRECTORY, "*"], "/") }}
     - uses: actions/cache@v3
       with:
         path: target
