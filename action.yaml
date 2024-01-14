@@ -16,14 +16,16 @@ runs:
         touch $file
         cp $file $CARGO_CACHE_DIRECTORY
     - shell: bash
-      run: |
-        cargo install --list > $CARGO_CACHE_DIRECTORY/install.txt
-
+      run: cargo install --list > $CARGO_CACHE_DIRECTORY/install.txt
+    - shell: bash
+      run: >
+        echo CARGO_CACHE_KEY=${{ runner.os }}-${{ hashFiles(format("{} {}", env.CARGO_CACHE_DIRECTORY, "*"), "/") }}
+        >> ${{github.env}}
     - uses: actions/cache@v3
       with:
         path: ~/.cargo/registry
-        key: ${{ runner.os }}-${{ hashFiles([env.CARGO_CACHE_DIRECTORY, "*"], "/") }}
+        key: ${{ env.CARGO_CACHE_KEY }}
     - uses: actions/cache@v3
       with:
         path: target/*/deps
-        key: ${{ runner.os }}-${{ hashFiles([env.CARGO_CACHE_DIRECTORY, "*"], "/") }}
+        key: ${{ env.CARGO_CACHE_KEY }}
