@@ -5,6 +5,12 @@ on:
       - main
   pull_request:
 jobs:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: raviqqe/cargo-cache@main
+      - run: cargo install wasmtime-cli
   spell_check:
     runs-on: ubuntu-latest
     steps:
