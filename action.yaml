@@ -11,6 +11,8 @@ runs:
     - shell: bash
       run: echo directory=.cargo_cache >> ${{ github.env }}
     - shell: bash
+      run: echo directories=$(find . -name Cargo.lock | sed s/Cargo.lock/target/) >> ${{ github.env }}
+    - shell: bash
       run: mkdir -p $directory
     - shell: bash
       run: |
