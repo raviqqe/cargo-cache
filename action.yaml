@@ -4,26 +4,26 @@ inputs: {}
 outputs: {}
 runs:
   using: composite
-  env:
-    DIRECTORY: /tmp/cargo_cache
   steps:
     - shell: bash
-      run: mkdir -p $DIRECTORY
+      run: echo CARGO_CACHE_DIRECTORY=/tmp/cargo_cache >> ${{ github.env }}
+    - shell: bash
+      run: mkdir -p $CARGO_CACHE_DIRECTORY
     - shell: bash
       run: |
         file=~/.cargo/config.toml
 
         touch $file
-        cp $file $DIRECTORY
+        cp $file $CARGO_CACHE_DIRECTORY
     - shell: bash
       run: |
-        cargo install --list > $DIRECTORY/install.txt
+        cargo install --list > $CARGO_CACHE_DIRECTORY/install.txt
 
     - uses: actions/cache@v3
       with:
         path: ~/.cargo/registry
-        key: ${{ runner.os }}-${{ hashFiles([env.DIRECTORY, "*"], "/") }}
+        key: ${{ runner.os }}-${{ hashFiles([env.CARGO_CACHE_DIRECTORY, "*"], "/") }}
     - uses: actions/cache@v3
       with:
         path: target/*/deps
-        key: ${{ runner.os }}-${{ hashFiles([env.DIRECTORY, "*"], "/") }}
+        key: ${{ runner.os }}-${{ hashFiles([env.CARGO_CACHE_DIRECTORY, "*"], "/") }}
