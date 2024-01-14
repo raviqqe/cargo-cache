@@ -1,0 +1,19 @@
+name: Rust restores cache
+description: Restores Rust build artifacts
+inputs: {}
+outputs: {}
+runs:
+  using: composite
+  steps:
+    - uses: actions/cache@v3
+      with:
+        path: ~/.cargo
+        key: ${{ runner.os }}-primes
+    - uses: actions/cache@v3
+      with:
+        path: ~/.cargo
+        key: ${{ runner.os }}-primes
+    - uses: ruby/setup-ruby@v1
+    - uses: homebrew/actions/setup-homebrew@master
+    - run: tools/ci/setup.sh
+      shell: bash
