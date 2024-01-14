@@ -5,7 +5,8 @@ outputs: {}
 runs:
   using: composite
   steps:
-    - run: echo hash=$(cat ~/.cargo/config.toml) >> ${{ github.env }}
+    - run: echo cargo_config=$(cat ~/.cargo/config.toml) >> ${{ github.env }}
+    - run: echo cargo_install_list=$(cargo install --list) >> ${{ github.env }}
     - uses: actions/cache@v3
       with:
         path: ~/.cargo/registry
