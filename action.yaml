@@ -7,14 +7,14 @@ runs:
   env:
     DIRECTORY: /tmp/cargo-cache
   steps:
-    - run: $
+    - run: mkdir -p $DIRECTORY
     - run: |
-        file=/tmp/cargo-cache/cargo_config.toml
+        file=$DIRECTORY/config.toml
 
         cargo install --list > $file
         echo cargo_install_list_file=$file >> ${{ github.env }}
     - run: |
-        file=/tmp/cargo_install_list.txt
+        file=$DIRECTORY/install.txt
 
         cargo install --list > $file
         echo cargo_install_list_file=$file >> ${{ github.env }}
