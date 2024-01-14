@@ -5,7 +5,6 @@
 
 > [!Warning]
 > Currently, this action works only with Rust on a nightly channel.
-> Although you can use this action with a stable channel, it might lead to unbounded cache sizes.
 
 GitHub Action to save and restore Rust build cache in `target` and `~/.cargo` directories
 
