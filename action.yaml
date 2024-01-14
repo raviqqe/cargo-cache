@@ -9,6 +9,10 @@ runs:
   using: composite
   steps:
     - shell: bash
+      run: rustup default nightly
+    - shell: bash
+      run: echo CARGO_UNSTABLE_GC=true >> ${{ github.env }}
+    - shell: bash
       run: echo prefix=cargo-cache-v1 >> ${{ github.env }}
     - shell: bash
       run: echo directory=.cargo_cache >> ${{ github.env }}
