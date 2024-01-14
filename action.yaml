@@ -31,7 +31,7 @@ runs:
         path: ~/.cargo ${{ env.paths }}
         key: cargo-cache-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/*')) }}-${{ env.timestamp }}
         restore-keys: |
-          cargo-cache-${{ runner.os }}-
-          cargo-cache-${{ runner.os }}-${{ github.job }}-
-          cargo-cache-${{ runner.os }}-${{ github.job }}-${{ github.action }}-
           cargo-cache-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/*')) }}-
+          cargo-cache-${{ runner.os }}-${{ github.job }}-${{ github.action }}-
+          cargo-cache-${{ runner.os }}-${{ github.job }}-
+          cargo-cache-${{ runner.os }}-
