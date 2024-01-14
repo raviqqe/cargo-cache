@@ -7,14 +7,18 @@ runs:
   env:
     DIRECTORY: /tmp/cargo_cache
   steps:
-    - run: mkdir -p $DIRECTORY
-    - run: |
+    - shell: bash
+      run: mkdir -p $DIRECTORY
+    - shell: bash
+      run: |
         file=~/.cargo/config.toml
 
         touch $file
         cp $file $DIRECTORY
-    - run: |
+    - shell: bash
+      run: |
         cargo install --list > $DIRECTORY/install.txt
+
     - uses: actions/cache@v3
       with:
         path: ~/.cargo/registry
