@@ -9,17 +9,12 @@ runs:
   steps:
     - run: mkdir -p $DIRECTORY
     - run: |
-        config_file=~/.cargo/config.toml
-        file=$DIRECTORY/config.toml
+        file=~/.cargo/config.toml
 
-        if [ -r $config_file ]; then
-          cp $config_file $file
-        fi
+        touch $file
+        cp $file $DIRECTORY
     - run: |
-        file=$DIRECTORY/install.txt
-
-        cargo install --list > $file
-        echo cargo_install_list_file=$file >> ${{ github.env }}
+        cargo install --list > $DIRECTORY/install.txt
     - uses: actions/cache@v3
       with:
         path: ~/.cargo/registry
