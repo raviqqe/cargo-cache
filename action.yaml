@@ -25,7 +25,7 @@ runs:
       run: |
         cargo install --list > $directory/install.txt
         echo timestamp=$(date +%s) >> ${{ github.env }}
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/.*
