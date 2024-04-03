@@ -18,7 +18,7 @@ runs:
     - shell: bash
       run: |
         mkdir -p $directory
-        cp $(find . -name Cargo.lock) $directory
+        cp -r $(find . -name Cargo.lock) $directory
     # TODO Move this to post steps and remove timestamps from keys.
     # https://github.com/actions/runner/issues/1478
     - shell: bash
@@ -37,9 +37,9 @@ runs:
           **/target/*/.fingerprint
           **/target/*/build
           **/target/*/deps
-        key: ${{ env.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/*')) }}-${{ env.timestamp }}
+        key: ${{ env.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/**')) }}-${{ env.timestamp }}
         restore-keys: |
-          ${{ env.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/*')) }}-
+          ${{ env.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/**')) }}-
           ${{ env.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-
           ${{ env.prefix }}-${{ runner.os }}-${{ github.job }}-
           ${{ env.prefix }}-${{ runner.os }}-
