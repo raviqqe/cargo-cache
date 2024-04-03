@@ -18,7 +18,11 @@ runs:
     - shell: bash
       run: |
         mkdir -p $directory
-        cp -r $(find . -name Cargo.lock) $directory
+        for file in $(find . -name Cargo.lock | sort); do
+          target_file=$directory/$file
+          mkdir -p $(dirname $target_file)
+          cp $file $target_file
+        done
     # TODO Move this to post steps and remove timestamps from keys.
     # https://github.com/actions/runner/issues/1478
     - shell: bash
