@@ -17,6 +17,7 @@ runs:
         echo directory=.cargo_cache >> ${{ github.env }}
     - shell: bash
       run: |
+        set -x
         mkdir -p $directory
         for file in $(find . -name Cargo.lock | sort); do
           echo $file
