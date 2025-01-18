@@ -17,8 +17,9 @@ runs:
         echo directory=.cargo_cache >> ${{ github.env }}
     - shell: bash
       run: |
-        mkdir -p "$directory"
+        mkdir -p $directory
         for file in $(find . -name Cargo.lock | sort); do
+          echo $file
           target_file=$directory/$file
           mkdir -p $(dirname $target_file)
           cp $file $target_file
