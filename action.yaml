@@ -45,7 +45,7 @@ runs:
           **/target/*/deps
         key: ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(steps.setup.outputs.directory, '/**')) }}-${{ steps.timestamp.outputs.timestamp }}
         restore-keys: |
-          ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/**')) }}-
+          ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(steps.setup.outputs.directory, '/**')) }}-
           ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-
           ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-
           ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-
