@@ -30,7 +30,7 @@ runs:
       shell: bash
       run: |
         cargo install --list > $directory/install.txt
-        echo timestamp=$(date +%s) >> ${{ github.env }}
+        echo timestamp=$(date +%s) >> ${{ github.output }}
     - uses: actions/cache@v4
       with:
         path: |
