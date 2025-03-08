@@ -8,13 +8,14 @@ outputs: {}
 runs:
   using: composite
   steps:
-    - shell: bash
+    - id: setup
+      shell: bash
       run: |
         rustup default nightly
         echo CARGO_UNSTABLE_GC=true >> ${{ github.env }}
 
-        echo prefix=cargo-cache-v1 >> ${{ github.env }}
-        echo directory=.cargo_cache >> ${{ github.env }}
+        echo prefix=cargo-cache-v1 >> ${{ github.output }}
+        echo directory=.cargo_cache >> ${{ github.output }}
     - shell: bash
       run: |
         mkdir -p $directory
@@ -25,7 +26,8 @@ runs:
         done
     # TODO Move this to post steps and remove timestamps from keys.
     # https://github.com/actions/runner/issues/1478
-    - shell: bash
+    - id: timestamp
+      shell: bash
       run: |
         cargo install --list > $directory/install.txt
         echo timestamp=$(date +%s) >> ${{ github.env }}
@@ -41,9 +43,9 @@ runs:
           **/target/*/.fingerprint
           **/target/*/build
           **/target/*/deps
-        key: ${{ env.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/**')) }}-${{ env.timestamp }}
+        key: ${{ steps.environment.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(steps.environment.outputs.directory, '/**')) }}-${{ envsteps.timestamp.outputs.timestamp }}
         restore-keys: |
-          ${{ env.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/**')) }}-
-          ${{ env.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-
-          ${{ env.prefix }}-${{ runner.os }}-${{ github.job }}-
-          ${{ env.prefix }}-${{ runner.os }}-
+          ${{ steps.environment.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/**')) }}-
+          ${{ steps.environment.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-
+          ${{ steps.environment.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-
+          ${{ steps.environment.outputs.prefix }}-${{ runner.os }}-
