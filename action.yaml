@@ -43,9 +43,9 @@ runs:
           **/target/*/.fingerprint
           **/target/*/build
           **/target/*/deps
-        key: ${{ steps.environment.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(steps.environment.outputs.directory, '/**')) }}-${{ steps.timestamp.outputs.timestamp }}
+        key: ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(steps.setup.outputs.directory, '/**')) }}-${{ steps.timestamp.outputs.timestamp }}
         restore-keys: |
-          ${{ steps.environment.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/**')) }}-
-          ${{ steps.environment.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-
-          ${{ steps.environment.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-
-          ${{ steps.environment.outputs.prefix }}-${{ runner.os }}-
+          ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/**')) }}-
+          ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-
+          ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-
+          ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-
