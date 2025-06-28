@@ -11,9 +11,6 @@ runs:
     - id: setup
       shell: bash
       run: |
-        rustup default nightly
-        echo CARGO_UNSTABLE_GC=true >> ${{ github.env }}
-
         echo prefix=cargo-cache-v1 >> ${{ github.output }}
         echo directory=.cargo_cache >> ${{ github.output }}
     - shell: bash
