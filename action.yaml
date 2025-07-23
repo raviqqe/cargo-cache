@@ -14,7 +14,7 @@ runs:
       run: |
         mkdir -p $directory
 
-        for file in $(find . -name Cargo.lock | sort); do
+        for file in $(find . -name Cargo.lock); do
           target_file=$directory/$file
           mkdir -p $(dirname $target_file)
           cp $file $target_file
