@@ -7,28 +7,21 @@ inputs: {}
 outputs: {}
 runs:
   using: composite
+  env:
+    directory: ${{ runner.temp }}/cargo_cache
   steps:
-    - id: setup
-      shell: bash
-      run: |
-        echo prefix=cargo-cache-v1 >> ${{ github.output }}
-        echo directory=${{ runner.temp }}/cargo_cache >> ${{ github.output }}
     - shell: bash
       run: |
-        directory=${{ steps.setup.outputs.directory }}
+        directory=${{ env.directory }}
         mkdir -p $directory
+
         for file in $(find . -name Cargo.lock | sort); do
           target_file=$directory/$file
           mkdir -p $(dirname $target_file)
           cp $file $target_file
         done
-    # TODO Move this to post steps and remove timestamps from keys.
-    # https://github.com/actions/runner/issues/1478
-    - id: timestamp
-      shell: bash
-      run: |
-        cargo install --list > ${{ steps.setup.outputs.directory }}/install.txt
-        echo timestamp=$(date +%s) >> ${{ github.output }}
+
+        cargo install --list > ${{ env.directory }}/install.txt
     - uses: actions/cache@v4
       with:
         path: |
@@ -38,4 +31,4 @@ runs:
           ~/.cargo/index
           ~/.cargo/registry
           **/target/
-        key: cargo-cache-v1-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(steps.setup.outputs.directory, '/**')) }}
+        key: cargo-cache-v1-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(env.directory, '/**')) }}
