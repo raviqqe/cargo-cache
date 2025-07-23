@@ -12,7 +12,7 @@ runs:
       shell: bash
       run: |
         echo prefix=cargo-cache-v1 >> ${{ github.output }}
-        echo directory=.cargo_cache >> ${{ github.output }}
+        echo directory=${{ runner.temp }}/cargo_cache >> ${{ github.output }}
     - shell: bash
       run: |
         directory=${{ steps.setup.outputs.directory }}
