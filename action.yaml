@@ -12,7 +12,6 @@ runs:
   steps:
     - shell: bash
       run: |
-        directory=${{ env.directory }}
         mkdir -p $directory
 
         for file in $(find . -name Cargo.lock | sort); do
@@ -21,7 +20,7 @@ runs:
           cp $file $target_file
         done
 
-        cargo install --list > ${{ env.directory }}/install.txt
+        cargo install --list > $directory/install.txt
     - uses: actions/cache@v4
       with:
         path: |
