@@ -10,40 +10,33 @@ runs:
   steps:
     - id: setup
       shell: bash
-      run: |
-        echo prefix=cargo-cache-v1 >> ${{ github.output }}
-        echo directory=.cargo_cache >> ${{ github.output }}
+      run: echo directory=.cargo_cache >> ${{ github.output }}
     - shell: bash
       run: |
         directory=${{ steps.setup.outputs.directory }}
         mkdir -p $directory
-        for file in $(find . -name Cargo.lock | sort); do
+
+        for file in $(find . -name Cargo.lock); do
           target_file=$directory/$file
           mkdir -p $(dirname $target_file)
           cp $file $target_file
         done
-    # TODO Move this to post steps and remove timestamps from keys.
-    # https://github.com/actions/runner/issues/1478
-    - id: timestamp
-      shell: bash
-      run: |
-        cargo install --list > ${{ steps.setup.outputs.directory }}/install.txt
-        echo timestamp=$(date +%s) >> ${{ github.output }}
+
+        cargo install --list > $directory/install.txt
     - uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/.*
           ~/.cargo/bin
           ~/.cargo/git
+          ~/.cargo/index
           ~/.cargo/registry
-          **/target/*/*.d
-          **/target/*/*.rlib
-          **/target/*/.fingerprint
-          **/target/*/build
-          **/target/*/deps
-        key: ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(steps.setup.outputs.directory, '/**')) }}-${{ steps.timestamp.outputs.timestamp }}
+          **/target/
+        key: cargo-cache-v2-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(format('{0}/**', steps.setup.outputs.directory)) }}
         restore-keys: |
-          ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(steps.setup.outputs.directory, '/**')) }}-
-          ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-${{ github.action }}-
-          ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-${{ github.job }}-
-          ${{ steps.setup.outputs.prefix }}-${{ runner.os }}-
+          cargo-cache-v2-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(format('{0}/**', steps.setup.outputs.directory)) }}
+          cargo-cache-v2-${{ runner.os }}-${{ github.job }}-${{ github.action }}-
+          cargo-cache-v2-${{ runner.os }}-${{ github.job }}-
+          cargo-cache-v2-${{ runner.os }}-
+    - run: rm -rf .cargo_cache
+      shell: bash
