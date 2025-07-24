@@ -23,6 +23,8 @@ runs:
         done
 
         cargo install --list > $directory/install.txt
+    - run: echo '${{ format('{0}/**', steps.setup.outputs.directory) }}'
+      shell: bash
     - uses: actions/cache@v4
       with:
         path: |
