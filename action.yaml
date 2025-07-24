@@ -32,4 +32,4 @@ runs:
           ~/.cargo/index
           ~/.cargo/registry
           **/target/
-        key: cargo-cache-v1-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(steps.setup.outputs.directory, '/**')) }}
+        key: cargo-cache-v2-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(steps.setup.outputs.directory, '/**')) }}
