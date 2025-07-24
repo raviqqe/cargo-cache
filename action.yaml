@@ -25,7 +25,7 @@ runs:
         cargo install --list > $directory/install.txt
     - run: find ${{ join(steps.setup.outputs.directory, '/**') }}
       shell: bash
-    - run: echo "${{ join([steps.setup.outputs.directory, '**'], '/') }}"
+    - run: echo "${{ format('{}/**', steps.setup.outputs.directory) }}"
       shell: bash
     - uses: actions/cache@v4
       with:
@@ -36,4 +36,4 @@ runs:
           ~/.cargo/index
           ~/.cargo/registry
           **/target/
-        key: cargo-cache-v2-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(join(steps.setup.outputs.directory, '/**')) }}
+        key: cargo-cache-v2-${{ runner.os }}-${{ github.job }}-${{ github.action }}-${{ hashFiles(format('{0}/**', steps.setup.outputs.directory)) }}
