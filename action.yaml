@@ -23,10 +23,6 @@ runs:
         done
 
         cargo install --list > $directory/install.txt
-    - run: find ${{ join(steps.setup.outputs.directory, '/**') }}
-      shell: bash
-    - run: echo "${{ format('{}/**', steps.setup.outputs.directory) }}"
-      shell: bash
     - uses: actions/cache@v4
       with:
         path: |
