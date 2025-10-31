@@ -25,6 +25,7 @@ runs:
         cargo install --list > $directory/install.txt
     - uses: actions/cache@v4
       with:
+        # target/
         path: |
           ~/.cargo/.*
           ~/.cargo/bin
