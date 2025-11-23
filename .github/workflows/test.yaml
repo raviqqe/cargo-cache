@@ -5,8 +5,14 @@ on:
       - main
   pull_request:
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  action:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v6
       - uses: ./.
@@ -25,3 +31,12 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: raviqqe/markdown-link-check@v1
+  test:
+    needs:
+      - action
+      - spell_check
+      - readme
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: for result in ${{ join(needs.*.result, ' ') }}; do [ $result = success ]; done
