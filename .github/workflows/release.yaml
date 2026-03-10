@@ -16,6 +16,7 @@ jobs:
         with:
           fetch-depth: 0
       - uses: pnpm/action-setup@v4
+      - uses: pnpm i
       - run: pnpm semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
