@@ -16,6 +16,10 @@ jobs:
         with:
           fetch-depth: 0
       - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          cache: pnpm
+          node-version-file: package.json
       - uses: pnpm i
       - run: pnpm semantic-release
         env:
