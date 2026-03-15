@@ -34,7 +34,6 @@ runs:
           **/target/
         key: cargo-cache-v2-${{ runner.arch }}-${{ runner.os }}-${{ github.workflow }}-${{ github.job }}-${{ strategy.job-index }}-${{ hashFiles(format('{0}/**', steps.setup.outputs.directory)) }}
         restore-keys: |
-          cargo-cache-v2-${{ runner.arch }}-${{ runner.os }}-${{ github.workflow }}-${{ github.job }}-${{ strategy.job-index }}-${{ hashFiles(format('{0}/**', steps.setup.outputs.directory)) }}
           cargo-cache-v2-${{ runner.arch }}-${{ runner.os }}-${{ github.workflow }}-${{ github.job }}-${{ strategy.job-index }}-
           cargo-cache-v2-${{ runner.arch }}-${{ runner.os }}-${{ github.workflow }}-${{ github.job }}-
           cargo-cache-v2-${{ runner.arch }}-${{ runner.os }}-${{ github.workflow }}-
